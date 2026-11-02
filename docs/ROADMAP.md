@@ -1,11 +1,13 @@
 # Violetmod roadmap
 
-## Current status: 0.3.0 - unified feature catalogue
+## Current status: 0.4.0 - diagnostics runtime foundation
 
 - [x] Geode project skeleton and metadata
 - [x] Main-menu entry point and navigable popup
 - [x] Persistent interface settings
 - [x] Feature preference catalogue for requested gameplay, timing, safety and label modules
+- [x] Live FPS, frame-time and session-time labels
+- [x] In-game safe-mode status indicator
 - [ ] Compile and validate against Geode SDK 5.6.1 on Android ARM64 and Windows
 - [ ] Implement runtime modules and mark each only after build/runtime testing
 
@@ -29,10 +31,10 @@
 | Frame extrapolation | Experimental visual interpolation | Settings/catalogue only |
 | Physics TPS | Requested simulation update rate | Settings/catalogue only |
 | FPS lock | Requested render target | Settings/catalogue only |
-| Safe mode | Disable experimental modules | Settings/catalogue only |
+| Safe mode | Disable experimental modules | State indicator implemented; module gating pending |
 | Safe mode popup | Explain safety fallback state | Settings/catalogue only |
 | Auto safe mode | Fallback after detected instability | Settings/catalogue only |
-| Labels | Configurable information overlays | Settings/catalogue only |
+| Labels | FPS, frame-time and session-time overlays | First three labels implemented; remaining labels planned |
 | All Copyable | Level-copy utility for the 2.2 copy system | Settings/catalogue only |
 | Verify Hack | Permit eligible unverified uploads and append an explicit `UNVERIFIED` marker to the level description | Settings/catalogue only |
 
@@ -72,4 +74,4 @@ FPS, TPS, physics TPS, frame time, attempts, session time, speed multiplier, pla
 
 ## Current limitations
 
-0.3.0 expands Geode settings and the unified feature catalogue. It does not yet implement the listed runtime gameplay hooks. The branch has not been compiled or tested in Geometry Dash in the current environment.
+0.4.0 adds a first runtime diagnostics overlay (FPS, frame time, session timer) and a safe-mode status indicator. The gameplay hooks in the catalogue remain unimplemented. The branch has not been compiled or tested in Geometry Dash in the current environment.
