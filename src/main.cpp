@@ -88,12 +88,10 @@ namespace {
                 case 1:
                     m_pageText->setString(
                         "FEATURE CATALOGUE\n\n"
-                        "Frame Counter - planned\n"
-                        "Hitbox Viewer - planned\n"
-                        "Show Trajectory - planned\n"
-                        "Practice utilities - planned\n"
-                        "Session statistics - planned\n\n"
-                        "Feature switches are defaults, not active tools yet."
+                        "Live diagnostics: FPS, frame time and session time\n"
+                        "Safe-mode status indicator\n"
+                        "More gameplay modules are in development.\n\n"
+                        "Configure live labels in Geode Settings."
                     );
                     break;
                 case 2:
