@@ -33,6 +33,7 @@
 | Safe mode popup | Explain safety fallback state | Settings/catalogue only |
 | Auto safe mode | Fallback after detected instability | Settings/catalogue only |
 | Labels | Configurable information overlays | Settings/catalogue only |
+| All Copyable | Level-copy utility for the 2.2 copy system | Settings/catalogue only |
 | Local verification testing | Local test indicator only | Settings/catalogue only |
 
 ## Label catalogue
@@ -41,8 +42,7 @@ FPS, TPS, physics TPS, frame time, attempts, session time, speed multiplier, pla
 
 ## Level access and verification
 
-- Copy tools may support levels owned by the user or explicitly authorized for editing.
-- Do not bypass passwords or access restrictions on protected levels.
+- **All Copyable:** add a level-copy utility compatible with Geometry Dash 2.2's current level-copy system. As noted, 2.2 levels do not use the old copy-password restriction, so this is not a password-bypass feature.
 - Verification tools must remain local/testing-only and must not falsify online verification, completion records or upload status.
 
 ## Implementation order
