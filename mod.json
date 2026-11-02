@@ -1,0 +1,13 @@
+{
+  "geode": "5.6.1",
+  "gd": {
+    "android": "2.2081",
+    "win": "2.2081"
+  },
+  "id": "sfj3861.violetmod",
+  "name": "Violetmod",
+  "version": "0.1.0",
+  "developer": "Sfj3861",
+  "description": "A modular Geometry Dash utility mod with a violet-themed interface.",
+  "dependencies": {}
+}
