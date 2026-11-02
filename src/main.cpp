@@ -16,6 +16,7 @@ namespace {
             }
 
             this->setTitle("Violetmod", "bigFont.fnt", 0.8f, 25.f);
+            m_bgSprite->setColor(ccc3(128, 86, 190));
 
             auto* subtitle = CCLabelBMFont::create(
                 "A modular Geometry Dash toolkit",
