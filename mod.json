@@ -6,8 +6,39 @@
   },
   "id": "sfj3861.violetmod",
   "name": "Violetmod",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "developer": "Sfj3861",
-  "description": "A modular Geometry Dash utility mod with a violet-themed interface.",
-  "dependencies": {}
+  "description": "A customizable Geometry Dash utility mod with a modular, violet-themed interface.",
+  "dependencies": {},
+  "settings": {
+    "ui-title": { "type": "title", "name": "Interface" },
+    "ui-theme": {
+      "type": "string", "default": "violet", "name": "Color theme",
+      "description": "Choose the accent color used by Violetmod.",
+      "one-of": ["violet", "midnight", "pink", "blue", "mint", "amber", "mono"]
+    },
+    "ui-scale": { "type": "float", "default": 1.0, "min": 0.75, "max": 1.35, "name": "Interface scale", "description": "Scales the popup contents." },
+    "ui-compact": { "type": "bool", "default": false, "name": "Compact layout", "description": "Use a denser layout with less spacing." },
+    "ui-show-subtitle": { "type": "bool", "default": true, "name": "Show subtitle" },
+    "ui-show-version": { "type": "bool", "default": true, "name": "Show version in About" },
+    "ui-button-label": { "type": "string", "default": "V", "name": "Menu button text", "description": "Text shown on the main-menu shortcut. Keep it short." },
+    "ui-button-scale": { "type": "float", "default": 0.8, "min": 0.4, "max": 1.5, "name": "Menu button size" },
+    "ui-button-opacity": { "type": "int", "default": 255, "min": 40, "max": 255, "name": "Menu button opacity" },
+    "ui-button-enabled": { "type": "bool", "default": true, "name": "Show menu shortcut" },
+    "ui-popup-width": { "type": "float", "default": 320.0, "min": 260.0, "max": 420.0, "name": "Popup width" },
+    "ui-popup-height": { "type": "float", "default": 220.0, "min": 180.0, "max": 320.0, "name": "Popup height" },
+    "ui-close-on-escape": { "type": "bool", "default": true, "name": "Close popup with back key" },
+    "ui-animations": { "type": "bool", "default": true, "name": "Popup animations" },
+    "ui-title-tools": { "type": "title", "name": "Feature defaults" },
+    "feature-frame-counter": { "type": "bool", "default": true, "name": "Enable Frame Counter", "description": "Enables the feature when its implementation is available." },
+    "feature-hitbox-viewer": { "type": "bool", "default": false, "name": "Enable Hitbox Viewer", "description": "Enables the feature when its implementation is available." },
+    "feature-trajectory": { "type": "bool", "default": false, "name": "Enable Show Trajectory", "description": "Enables the feature when its implementation is available." },
+    "feature-practice-tools": { "type": "bool", "default": false, "name": "Practice utilities" },
+    "feature-level-tools": { "type": "bool", "default": true, "name": "Level utilities" },
+    "feature-session-stats": { "type": "bool", "default": true, "name": "Session statistics" },
+    "feature-notifications": { "type": "bool", "default": true, "name": "In-game notifications" },
+    "feature-title": { "type": "title", "name": "Safety and compatibility" },
+    "compat-safe-mode": { "type": "bool", "default": false, "name": "Safe mode", "description": "Disables experimental Violetmod modules when implemented." },
+    "compat-debug-logs": { "type": "bool", "default": false, "name": "Debug logging" }
+  }
 }
