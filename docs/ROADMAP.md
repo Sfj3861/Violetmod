@@ -34,7 +34,7 @@
 | Auto safe mode | Fallback after detected instability | Settings/catalogue only |
 | Labels | Configurable information overlays | Settings/catalogue only |
 | All Copyable | Level-copy utility for the 2.2 copy system | Settings/catalogue only |
-| Local verification testing | Local test indicator only | Settings/catalogue only |
+| Verify Hack | Permit eligible unverified uploads and append an explicit `UNVERIFIED` marker to the level description | Settings/catalogue only |
 
 ## Label catalogue
 
@@ -43,7 +43,7 @@ FPS, TPS, physics TPS, frame time, attempts, session time, speed multiplier, pla
 ## Level access and verification
 
 - **All Copyable:** add a level-copy utility compatible with Geometry Dash 2.2's current level-copy system. As noted, 2.2 levels do not use the old copy-password restriction, so this is not a password-bypass feature.
-- Verification tools must remain local/testing-only and must not falsify online verification, completion records or upload status.
+- **Verify Hack:** the requested behavior is to permit uploading a level without completing the normal in-game verification, and automatically append `UNVERIFIED` to its description. It must never claim the level is verified or fabricate a legitimate completion.
 
 ## Implementation order
 
