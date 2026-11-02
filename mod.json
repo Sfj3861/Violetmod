@@ -6,7 +6,7 @@
   },
   "id": "sfj3861.violetmod",
   "name": "Violetmod",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "developer": "Sfj3861",
   "description": "A unified, modular Geometry Dash toolkit for Geode with gameplay, diagnostics, editor and performance modules.",
   "dependencies": {},
@@ -254,12 +254,6 @@
       "name": "Frame extrapolation",
       "description": "Preference only; module implementation is pending."
     },
-    "feature-verify-local": {
-      "type": "bool",
-      "default": false,
-      "name": "Local verification testing",
-      "description": "Local-only testing indicator; never changes online verification or upload status."
-    },
     "physics-title": {
       "type": "title",
       "name": "Timing and performance"
@@ -438,6 +432,24 @@
       "min": 40,
       "max": 255,
       "name": "Labels opacity"
+    },
+    "feature-verify-hack": {
+      "type": "bool",
+      "default": false,
+      "name": "Verify Hack (UNVERIFIED upload)",
+      "description": "Allows the supported upload flow to mark an eligible unverified level as UNVERIFIED. Never represents it as verified."
+    },
+    "feature-all-copyable": {
+      "type": "bool",
+      "default": true,
+      "name": "All Copyable (GD 2.2)",
+      "description": "Uses the current Geometry Dash 2.2 copy workflow; not a password bypass."
+    },
+    "verify-hack-marker": {
+      "type": "string",
+      "default": "UNVERIFIED",
+      "name": "Unverified description marker",
+      "description": "Text appended to the level description when using Verify Hack."
     }
   }
 }
