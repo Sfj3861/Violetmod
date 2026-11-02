@@ -1,42 +1,33 @@
 # Violetmod
 
-A modular Geometry Dash utility mod built with Geode.
+A modular Geometry Dash utility mod built with Geode, with a violet-themed and touch-friendly interface.
 
-## Project goals
+## Current state
 
-- Violet/purple visual identity with a clean, touch-friendly interface.
-- No mandatory account or external login.
-- Modular feature architecture so tools can be enabled and configured independently.
-- Android-first testing, with Windows support where practical.
-- Reuse compatible open-source Geode patterns and libraries when their licences allow it.
+Version **0.1.1** adds a navigable popup from the Geometry Dash main menu. It currently contains Home, Tools, and About sections. The Tools page is a roadmap, not a claim that those tools are already implemented.
 
-## Current status
+## Planned features
 
-**Foundation / early development.** The repository contains the initial Geode project scaffold and a basic main-menu entry that opens a placeholder alert. This is not yet a feature-complete or release-ready mod.
+- Frame Counter
+- Hitbox Viewer
+- Show Trajectory
+- Persistent settings and modular feature controls
 
 ## Build
 
-1. Install the Geode SDK matching the target Geode release.
-2. Set the `GEODE_SDK` environment variable to the SDK directory.
-3. Configure and build with CMake using a supported Geode toolchain.
-4. Package and test the resulting mod on the matching Geometry Dash and Geode versions.
+Requirements:
+- Geode SDK 5.6.1
+- CMake 3.21+
+- A compatible C++23 toolchain for the target platform
 
-Target game version: Geometry Dash 2.2081  
-Target Geode version: 5.6.1
+Set the `GEODE_SDK` environment variable to your Geode SDK directory, then configure and build with CMake.
 
-## Planned modules
+## Compatibility target
 
-- Violet-themed interface and settings framework
-- Frame Counter
-- Hitbox display
-- Trajectory visualizer
-- Replay and recording utilities, subject to compatibility and feasibility
-- Import/export for Violetmod's own documented formats
+- Geometry Dash 2.2081
+- Android ARM64
+- Windows
 
-## Suggestions and contributions
+## Development status
 
-Feature proposals should be opened as GitHub Issues. Include the expected behavior, platform, and a short use case. Proposals will be reviewed for feasibility, compatibility, accessibility, and licensing.
-
-## Licensing
-
-Third-party code and assets will only be incorporated when their licences permit it. Attribution and licence notices will be preserved.
+The source is an early implementation and has **not yet been compiled or tested in-game**. Contributions should use public Geode APIs and respect the licenses of any third-party code.
