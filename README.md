@@ -31,13 +31,13 @@ Physics TPS and rendered FPS are different systems. A requested target cannot gu
 - Manual safe mode
 - Safe-mode warning popup
 - Automatic safe mode fallback
-- Local verification testing only; Violetmod will not falsify online verification or upload status.
+- Verify Hack: allow an eligible level upload without a completed in-game verification, while clearly marking the level description as `UNVERIFIED`.
 
 ### On-screen labels
 Independent label toggles are planned for FPS, TPS, physics TPS, frame time, attempts, session time, speed, player coordinates/mode, level name, practice status, input, memory and display refresh rate. Label scale and opacity are also configurable.
 
-## Level copying
-Copy tools will operate on levels the user owns or is authorized to edit. Violetmod will not bypass passwords or access restrictions on other creators' protected levels.
+## Level copying and Verify Hack
+**All Copyable** will use Geometry Dash 2.2's current copy system. The old copy-password restriction is not used for 2.2 levels, so this is a compatibility utility rather than a password bypass.
 
 ## Interface customization
 
