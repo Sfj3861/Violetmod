@@ -37,7 +37,7 @@ namespace {
     }
 
     CCLabelBMFont* ensureLabel(CCNode* parent, char const* id, float y) {
-        if (auto* existing = typeinfo_cast<CCLabelBMFont*>(parent->getChildByID(id))) {
+        if (auto* existing = static_cast<CCLabelBMFont*>(parent->getChildByID(id))) {
             return existing;
         }
 
