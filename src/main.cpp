@@ -115,6 +115,7 @@ namespace {
         static VioletmodPopup* create() {
             auto* ret = new VioletmodPopup();
             if (ret->init()) {
+                ret->m_noElasticity = !Mod::get()->getSettingValue<bool>("ui-animations");
                 ret->autorelease();
                 return ret;
             }
@@ -159,9 +160,6 @@ class $modify(VioletmodMenuLayer, MenuLayer) {
 
     void onVioletmodPressed(CCObject*) {
         if (auto* popup = VioletmodPopup::create()) {
-            if (!Mod::get()->getSettingValue<bool>("ui-animations")) {
-                popup->m_noElasticity = true;
-            }
             popup->show();
         }
     }
