@@ -1,32 +1,39 @@
 # Violetmod roadmap
 
-## Phase 1 — foundation
-- [x] Geode metadata for Geometry Dash 2.2081
-- [x] CMake project configuration
+## Current status: 0.1.1 - interface foundation
+
+- [x] Geode project skeleton and metadata
 - [x] Main-menu entry point
-- [x] Initial popup/alert proving the menu hook is active
-- [ ] Violet-themed reusable UI components
-- [ ] Persistent settings registry
-- [ ] Validate layout and touch targets on Android
+- [x] Navigable popup with Home, Tools, and About sections
+- [ ] Validate a full build against Geode SDK 5.6.1 on Android ARM64 and Windows
+- [ ] Add persistent settings and UI preferences
+- [ ] Add a modular feature registry and per-feature enable/disable controls
 
-## Phase 2 — core utilities
-- [ ] Frame Counter: visibility, position, scale, and display options
-- [ ] Hitbox display with world-space rendering
-- [ ] Trajectory visualizer with world-space rendering
-- [ ] Independent enable/disable controls for each module
+## Planned tools
 
-## Phase 3 — file workflows
-- [ ] Import/export for Violetmod settings
-- [ ] Document native file formats before implementing them
-- [ ] Validate malformed, oversized, or incompatible files
+### Frame Counter
+- Display frame and timing information in a compact overlay.
+- Keep the overlay independent of camera/world transforms.
+- Make visibility and placement configurable.
 
-## Design principles
-1. Prefer stable Geode APIs over fragile hooks.
-2. Render world overlays in world coordinates, not camera-relative screen coordinates.
-3. Separate UI, settings, rendering, and file I/O.
-4. Keep Android touch targets comfortable without hiding advanced settings.
-5. Test each feature on its target platform before marking it complete.
-6. Reuse external code only when its licence permits it; preserve attribution.
+### Hitbox Viewer
+- Draw diagnostic hitbox overlays in the correct world coordinate space.
+- Keep camera transforms and gameplay object transforms separate.
+- Provide clear visibility controls.
 
-## Community feedback
-At the time of this initial review, the repository had no Issues or Pull Requests containing feature proposals. New suggestions can be opened as GitHub Issues and reviewed for feasibility, compatibility, accessibility, and licensing.
+### Show Trajectory
+- Display a trajectory preview using the game's relevant object and physics data.
+- Keep the preview aligned with the world rather than fixed to the camera.
+- Allow the overlay to be toggled independently.
+
+## Development principles
+
+- Use public Geode SDK APIs and compatible open-source code only.
+- Prefer small, isolated modules over one large implementation.
+- Never label a feature as working until it has been built and tested in-game.
+- Keep Android touch targets readable and avoid overcrowding the interface.
+- Preserve compatibility with other Geode mods wherever possible.
+
+## Current limitations
+
+The popup is an early navigation shell. The listed tools are not implemented yet. This repository change has not been compiled or tested in Geometry Dash because a matching Geode SDK toolchain is not available in the current environment.
