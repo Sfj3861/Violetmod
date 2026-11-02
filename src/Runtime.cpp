@@ -59,8 +59,20 @@ namespace {
         static auto sessionStart = Clock::now();
         static float refreshAccumulator = 0.f;
         static float lastFrameTimeMs = 0.f;
+        static bool safeModeNoticeShown = false;
 
-        if (Mod::get()->getSettingValue<bool>("safe-mode-enabled")) {
+        bool safeMode = Mod::get()->getSettingValue<bool>("safe-mode-enabled");
+        if (safeMode && !safeModeNoticeShown && Mod::get()->getSettingValue<bool>("safe-mode-popup")) {
+            FLAlertLayer::create(
+                "Violetmod Safe Mode",
+                "Safe Mode is enabled. Experimental Violetmod gameplay modules are disabled where supported.",
+                "OK"
+            )->show();
+            safeModeNoticeShown = true;
+        }
+        if (!safeMode) safeModeNoticeShown = false;
+
+        if (safeMode) {
             if (auto* label = ensureLabel(layer, "violetmod-overlay-safe", 0.f)) {
                 label->setString("Violetmod: SAFE MODE");
                 auto size = CCDirector::get()->getWinSize();
