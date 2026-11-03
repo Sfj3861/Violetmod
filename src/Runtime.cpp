@@ -66,6 +66,9 @@ namespace {
         static auto sessionStart = Clock::now();
         static float refreshAccumulator = 0.f;
         static float lastFrameTimeMs = 0.f;
+        static float tpsWindow = 0.f;
+        static unsigned int updatesInWindow = 0;
+        static float measuredTps = 0.f;
         static bool safeModeNoticeShown = false;
 
         auto* mod = Mod::get();
@@ -92,7 +95,16 @@ namespace {
             safe->removeFromParentAndCleanup(true);
         }
 
-        if (dt > 0.f) lastFrameTimeMs = dt * 1000.f;
+        if (dt > 0.f) {
+            lastFrameTimeMs = dt * 1000.f;
+            tpsWindow += dt;
+            ++updatesInWindow;
+            if (tpsWindow >= 1.f) {
+                measuredTps = static_cast<float>(updatesInWindow) / tpsWindow;
+                updatesInWindow = 0;
+                tpsWindow = 0.f;
+            }
+        }
         refreshAccumulator += dt;
         if (refreshAccumulator < kRefreshInterval) return;
         refreshAccumulator = 0.f;
@@ -101,10 +113,11 @@ namespace {
         float y = winSize.height - 8.f;
         auto elapsed = std::chrono::duration<double>(Clock::now() - sessionStart).count();
 
-        std::ostringstream fps, frameTime, attempts, clicks, speed, px, py;
+        std::ostringstream fps, frameTime, attempts, clicks, speed, px, py, tps;
         fps << "FPS (update estimate): " << std::fixed << std::setprecision(1)
             << (lastFrameTimeMs > 0.f ? 1000.f / lastFrameTimeMs : 0.f);
         frameTime << "Frame time: " << std::fixed << std::setprecision(2) << lastFrameTimeMs << " ms";
+        tps << "TPS (PlayLayer updates): " << std::fixed << std::setprecision(1) << measuredTps;
         attempts << "Attempts: " << layer->m_attempts;
         clicks << "Clicks: " << layer->m_clicks;
         speed << "Speed setting: " << std::fixed << std::setprecision(2)
@@ -112,6 +125,8 @@ namespace {
 
         setOverlayLine(layer, "label-fps", "violetmod-overlay-fps", fps.str(), y);
         setOverlayLine(layer, "label-frame-time", "violetmod-overlay-frame-time", frameTime.str(), y);
+        setOverlayLine(layer, "label-tps", "violetmod-overlay-tps", tps.str(), y);
+        setOverlayLine(layer, "label-physics-tps", "violetmod-overlay-physics-tps", tps.str(), y);
         setOverlayLine(layer, "label-session-time", "violetmod-overlay-session-time",
             "Session: " + formatDuration(elapsed), y);
         setOverlayLine(layer, "label-attempts", "violetmod-overlay-attempts", attempts.str(), y);
@@ -142,6 +157,14 @@ namespace {
 
 class $modify(VioletmodPlayLayer, PlayLayer) {
     void update(float dt) {
+        auto* mod = Mod::get();
+        bool safeMode = mod->getSettingValue<bool>("safe-mode-enabled");
+        bool speedhack = mod->getSettingValue<bool>("feature-speedhack");
+        // Time manipulation is confined to Practice Mode to protect normal runs.
+        if (!safeMode && speedhack && m_isPracticeMode) {
+            float multiplier = mod->getSettingValue<float>("speedhack-value");
+            dt *= std::clamp(multiplier, 0.1f, 5.f);
+        }
         PlayLayer::update(dt);
         updateDiagnosticsOverlay(this, dt);
     }
