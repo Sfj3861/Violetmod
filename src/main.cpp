@@ -88,18 +88,21 @@ namespace {
                 case 1:
                     m_pageText->setString(
                         "FEATURE CATALOGUE\n\n"
-                        "Live diagnostics: FPS, frame time and session time\n"
-                        "Safe-mode status indicator\n"
-                        "More gameplay modules are in development.\n\n"
-                        "Configure live labels in Geode Settings."
+                        "Live diagnostics: FPS, frame time, TPS and clicks\n"
+                        "Per-level session timer and player coordinates\n"
+                        "Practice-only speedhack with Safe Mode gate\n"
+                        "Adjust overlay position, spacing and refresh\n\n"
+                        "Hitboxes, trajectory and StartPos tools remain in development."
                     );
                     break;
                 case 2:
                     m_pageText->setString(
                         "CUSTOMIZATION\n\n"
                         "Open Geode > Violetmod > Settings.\n"
-                        "Theme, scale, popup size and menu shortcut\n"
-                        "can be adjusted there. Changes are saved by Geode."
+                        "Theme, popup size and menu shortcut\n"
+                        "Overlay position, line spacing and refresh rate\n"
+                        "Label visibility, scale and opacity\n\n"
+                        "All preferences are saved by Geode."
                     );
                     break;
             }
