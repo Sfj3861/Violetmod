@@ -55,7 +55,9 @@ namespace {
         if (!label) return;
 
         label->setString(value.c_str());
-        label->setPosition({Mod::get()->getSettingValue<float>("overlay-x"), y});
+        auto win = CCDirector::get()->getWinSize();
+        float overlayX = std::clamp(Mod::get()->getSettingValue<float>("overlay-x"), 0.f, std::max(0.f, win.width - 20.f));
+        label->setPosition({overlayX, y});
         label->setScale(Mod::get()->getSettingValue<float>("labels-scale"));
         label->setOpacity(static_cast<GLubyte>(
             Mod::get()->getSettingValue<int>("labels-opacity")
@@ -154,13 +156,13 @@ namespace {
         tps << "TPS (PlayLayer updates): " << std::fixed << std::setprecision(1) << measuredTps;
         attempts << "Attempts: " << layer->m_attempts;
         clicks << "Clicks: " << layer->m_clicks;
-        speed << "Speed setting: " << std::fixed << std::setprecision(2)
-              << mod->getSettingValue<float>("speedhack-value") << "x";
+        speed << "Speedhack: " << ((mod->getSettingValue<bool>("feature-speedhack") && layer->m_isPracticeMode && !safeMode) ? "ACTIVE " : "inactive ")
+              << std::fixed << std::setprecision(2) << mod->getSettingValue<float>("speedhack-value") << "x";
 
         setOverlayLine(layer, "label-fps", "violetmod-overlay-fps", fps.str(), y);
         setOverlayLine(layer, "label-frame-time", "violetmod-overlay-frame-time", frameTime.str(), y);
         setOverlayLine(layer, "label-tps", "violetmod-overlay-tps", tps.str(), y);
-        setOverlayLine(layer, "label-physics-tps", "violetmod-overlay-physics-tps", tps.str(), y);
+        setOverlayLine(layer, "label-physics-tps", "violetmod-overlay-physics-tps", "Physics TPS: separate engine counter unavailable", y);
         setOverlayLine(layer, "label-session-time", "violetmod-overlay-session-time",
             "Session: " + formatDuration(elapsed), y);
         setOverlayLine(layer, "label-attempts", "violetmod-overlay-attempts", attempts.str(), y);
