@@ -333,7 +333,7 @@
       "type": "bool",
       "default": false,
       "name": "Label: FPS",
-      "description": "Display preference; overlay implementation is pending."
+      "description": "Displays an update-rate estimate from PlayLayer timing; it is not a hardware refresh-rate measurement."
     },
     "label-tps": {
       "type": "bool",
@@ -351,37 +351,37 @@
       "type": "bool",
       "default": false,
       "name": "Label: Frame time",
-      "description": "Display preference; overlay implementation is pending."
+      "description": "Displays the latest PlayLayer update delta in milliseconds."
     },
     "label-attempts": {
       "type": "bool",
       "default": false,
       "name": "Label: Attempts",
-      "description": "Display preference; overlay implementation is pending."
+      "description": "Displays the current level attempt count."
     },
     "label-session-time": {
       "type": "bool",
       "default": false,
       "name": "Label: Session time",
-      "description": "Display preference; overlay implementation is pending."
+      "description": "Displays elapsed time since the gameplay session overlay was initialized."
     },
     "label-speed": {
       "type": "bool",
       "default": false,
       "name": "Label: Speed multiplier",
-      "description": "Display preference; overlay implementation is pending."
+      "description": "Displays the configured speed multiplier value; it does not activate speedhack."
     },
     "label-player-x": {
       "type": "bool",
       "default": false,
       "name": "Label: Player X position",
-      "description": "Display preference; overlay implementation is pending."
+      "description": "Displays the primary player's current X position."
     },
     "label-player-y": {
       "type": "bool",
       "default": false,
       "name": "Label: Player Y position",
-      "description": "Display preference; overlay implementation is pending."
+      "description": "Displays the primary player's current Y position."
     },
     "label-player-mode": {
       "type": "bool",
@@ -393,19 +393,19 @@
       "type": "bool",
       "default": false,
       "name": "Label: Level name",
-      "description": "Display preference; overlay implementation is pending."
+      "description": "Displays the current level name."
     },
     "label-practice-status": {
       "type": "bool",
       "default": false,
       "name": "Label: Practice status",
-      "description": "Display preference; overlay implementation is pending."
+      "description": "Displays whether the current run is in Practice or Normal mode."
     },
     "label-clicks": {
       "type": "bool",
       "default": false,
       "name": "Label: Input display",
-      "description": "Display preference; overlay implementation is pending."
+      "description": "Displays the current level click counter."
     },
     "label-memory": {
       "type": "bool",
