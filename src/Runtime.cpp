@@ -73,6 +73,7 @@ namespace {
         static float lastFrameTimeMs = 0.f;
         static float smoothedFrameTimeMs = 0.f;
         static unsigned int updatesInWindow = 0;
+        static unsigned long long sessionFrameCount = 0;
         static float measuredTps = 0.f;
         static int previousClicks = 0;
         static float clicksPerSecond = 0.f;
@@ -88,6 +89,7 @@ namespace {
             clickWindowStart = now;
             refreshAccumulator = 0.f;
             updatesInWindow = 0;
+            sessionFrameCount = 0;
             previousClicks = layer->m_clicks;
             measuredTps = 0.f;
             clicksPerSecond = 0.f;
@@ -122,6 +124,7 @@ namespace {
             smoothedFrameTimeMs = smoothedFrameTimeMs <= 0.f
                 ? lastFrameTimeMs : (smoothedFrameTimeMs * 0.85f + lastFrameTimeMs * 0.15f);
             ++updatesInWindow;
+            ++sessionFrameCount;
         }
         auto tpsElapsed = std::chrono::duration<float>(now - tpsWindowStart).count();
         if (tpsElapsed >= 1.f) {
@@ -148,12 +151,13 @@ namespace {
         float lineSpacing = std::clamp(mod->getSettingValue<float>("overlay-line-spacing"), 10.f, 40.f);
         auto elapsed = std::chrono::duration<double>(now - sessionStart).count();
 
-        std::ostringstream fps, frameTime, attempts, clicks, speed, px, py, tps, clickRate;
+        std::ostringstream fps, frameTime, attempts, clicks, speed, px, py, tps, clickRate, frameCounter;
         fps << "FPS (update estimate): " << std::fixed << std::setprecision(1)
             << (lastFrameTimeMs > 0.f ? 1000.f / lastFrameTimeMs : 0.f);
         frameTime << "Frame time: " << std::fixed << std::setprecision(2) << smoothedFrameTimeMs << " ms";
         clickRate << "Click rate: " << std::fixed << std::setprecision(1) << clicksPerSecond << "/s";
         tps << "TPS (PlayLayer updates): " << std::fixed << std::setprecision(1) << measuredTps;
+        frameCounter << "Frames: " << sessionFrameCount;
         attempts << "Attempts: " << layer->m_attempts;
         clicks << "Clicks: " << layer->m_clicks;
         speed << "Speedhack: " << ((mod->getSettingValue<bool>("feature-speedhack") && layer->m_isPracticeMode && !safeMode) ? "ACTIVE " : "inactive ")
@@ -161,6 +165,7 @@ namespace {
 
         setOverlayLine(layer, "label-fps", "violetmod-overlay-fps", fps.str(), y);
         setOverlayLine(layer, "label-frame-time", "violetmod-overlay-frame-time", frameTime.str(), y);
+        setOverlayLine(layer, "label-frame-counter", "violetmod-overlay-frame-counter", frameCounter.str(), y);
         setOverlayLine(layer, "label-tps", "violetmod-overlay-tps", tps.str(), y);
         setOverlayLine(layer, "label-physics-tps", "violetmod-overlay-physics-tps", "Physics TPS: separate engine counter unavailable", y);
         setOverlayLine(layer, "label-session-time", "violetmod-overlay-session-time",
