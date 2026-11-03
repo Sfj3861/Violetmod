@@ -92,7 +92,13 @@ namespace {
                         "Per-level session timer and player coordinates\n"
                         "Practice-only speedhack with Safe Mode gate\n"
                         "Adjust overlay position, spacing and refresh\n\n"
-                        "Hitboxes, trajectory and StartPos tools remain in development."
+                        "Visual player bounds (approx.) and world-space movement trail
+"
+                        "are available as debug overlays. True collision hitboxes and
+"
+                        "future physics prediction are not claimed yet; StartPos tools
+"
+                        "remain in development."
                     );
                     break;
                 case 2:
