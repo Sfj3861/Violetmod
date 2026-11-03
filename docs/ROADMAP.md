@@ -14,7 +14,10 @@
 - [x] Explicit unavailable state for independent physics TPS instead of duplicating PlayLayer TPS
 - [x] In-game safe-mode status indicator
 - [ ] Compile and validate against Geode SDK 5.6.1 on Android ARM64 and Windows
-- [ ] Implement runtime modules and mark each only after build/runtime testing
+- [x] Add approximate player-bounds overlay, historical bounds trail and world-space movement trace
+- [ ] Validate visual debug overlays in-game on Android ARM64 and Windows
+- [ ] Implement true collision geometry and physics-based future trajectory prediction
+- [ ] Implement remaining runtime modules and mark each only after build/runtime testing
 
 ## Requested modules
 
@@ -25,9 +28,9 @@
 | Noclip | Local practice collision override | Settings/catalogue only |
 | Limit Noclip | Constrain local noclip usage | Settings/catalogue only |
 | Layout mode | Layout/practice display mode | Settings/catalogue only |
-| Show hitboxes | Player/object hitbox visualization | Settings/catalogue only |
-| Show hitbox trail | Historical hitbox visualization | Settings/catalogue only |
-| Show trajectory | Predicted player path overlay | Settings/catalogue only |
+| Show hitboxes | Player rendered-bounds visualization (approximation, not true collision geometry) | Runtime overlay implemented; build/device validation pending |
+| Show hitbox trail | Recent historical outlines of rendered player bounds | Runtime overlay implemented; build/device validation pending |
+| Show trajectory | Recent movement path in PlayLayer coordinates; not future physics prediction | Runtime overlay implemented; build/device validation pending |
 | Smart StartPos | Assisted start-position workflow | Settings/catalogue only |
 | StartPos switcher | Switch saved start positions | Settings/catalogue only |
 | All attempts | Display attempt history | Settings/catalogue only |
@@ -55,7 +58,7 @@ FPS, TPS, physics TPS, frame time, attempts, session time, speed multiplier, pla
 ## Implementation order
 
 1. **Foundation and diagnostics:** label framework, FPS/frame-time display, attempt/session labels, safe-mode state and warning popup.
-2. **Visual debugging:** hitboxes, hitbox trail, trajectory, layout mode, no glow and no shaders.
+2. **Visual debugging:** approximate player bounds, historical bounds trail and recent world-space movement trace are now implemented. True collision geometry, future physics prediction, layout mode, no glow and no shaders remain pending.
 3. **Practice workflow:** StartPos manager/switcher, smart StartPos, local noclip and bounded noclip.
 4. **Timing/audio:** speedhack, audio synchronization, pitch shifter, physics TPS target, FPS target and frame extrapolation.
 5. **Validation:** test every module independently on Android ARM64 and Windows, including interactions between modules.
@@ -79,4 +82,4 @@ FPS, TPS, physics TPS, frame time, attempts, session time, speed multiplier, pla
 
 ## Current limitations
 
-0.4.0 adds a first runtime diagnostics overlay (FPS, frame time, session timer) and a safe-mode status indicator. The gameplay hooks in the catalogue remain unimplemented. The branch has not been compiled or tested in Geometry Dash in the current environment.
+0.4.0 adds a first runtime diagnostics overlay (FPS, frame time, session timer) and a safe-mode status indicator. The visual debug overlay now draws approximate rendered player bounds, historical bounds outlines and a recent movement trace. It does not claim to expose the engine's exact collision geometry or predict future physics. Other gameplay hooks in the catalogue remain unimplemented. The branch has not been compiled or tested in Geometry Dash in the current environment.
