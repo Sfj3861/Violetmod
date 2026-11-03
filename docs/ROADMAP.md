@@ -6,7 +6,12 @@
 - [x] Main-menu entry point and navigable popup
 - [x] Persistent interface settings
 - [x] Feature preference catalogue for requested gameplay, timing, safety and label modules
-- [x] Live FPS, frame-time and session-time labels
+- [x] Live FPS estimate, smoothed frame-time and session-time labels
+- [x] Per-level diagnostic state reset and rolling PlayLayer TPS measurement
+- [x] Attempts, clicks, click-rate, player coordinates, level name and practice-state labels
+- [x] Configurable overlay position, line spacing and refresh interval
+- [x] Practice-only speedhack gated by Safe Mode; active/inactive state shown honestly
+- [x] Explicit unavailable state for independent physics TPS instead of duplicating PlayLayer TPS
 - [x] In-game safe-mode status indicator
 - [ ] Compile and validate against Geode SDK 5.6.1 on Android ARM64 and Windows
 - [ ] Implement runtime modules and mark each only after build/runtime testing
@@ -15,7 +20,7 @@
 
 | Module | Scope | Status |
 |---|---|---|
-| Speedhack | Adjustable game speed | Settings/catalogue only |
+| Speedhack | Adjustable game speed in Practice Mode only | Implemented in runtime; compile/device validation pending |
 | Speedhack audio | Keep audio synchronized with speed changes | Settings/catalogue only |
 | Noclip | Local practice collision override | Settings/catalogue only |
 | Limit Noclip | Constrain local noclip usage | Settings/catalogue only |
@@ -34,7 +39,7 @@
 | Safe mode | Disable experimental modules | State indicator implemented; module gating pending |
 | Safe mode popup | Explain safety fallback state | Settings/catalogue only |
 | Auto safe mode | Fallback after detected instability | Settings/catalogue only |
-| Labels | FPS, frame-time and session-time overlays | First three labels implemented; remaining labels planned |
+| Labels | FPS, frame-time, TPS, attempts, session, click rate, coordinates and status | Expanded runtime overlay implemented; compile/device validation pending |
 | All Copyable | Level-copy utility for the 2.2 copy system | Settings/catalogue only |
 | Verify Hack | Permit eligible unverified uploads and append an explicit `UNVERIFIED` marker to the level description | Settings/catalogue only |
 
