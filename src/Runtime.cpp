@@ -1,6 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 
+#include <algorithm>
 #include <chrono>
 #include <iomanip>
 #include <sstream>
@@ -157,6 +158,7 @@ namespace {
 
 class $modify(VioletmodPlayLayer, PlayLayer) {
     void update(float dt) {
+        float realDt = dt;
         auto* mod = Mod::get();
         bool safeMode = mod->getSettingValue<bool>("safe-mode-enabled");
         bool speedhack = mod->getSettingValue<bool>("feature-speedhack");
@@ -166,6 +168,6 @@ class $modify(VioletmodPlayLayer, PlayLayer) {
             dt *= std::clamp(multiplier, 0.1f, 5.f);
         }
         PlayLayer::update(dt);
-        updateDiagnosticsOverlay(this, dt);
+        updateDiagnosticsOverlay(this, realDt);
     }
 };
