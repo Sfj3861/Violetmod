@@ -4,12 +4,12 @@ A unified, native Geometry Dash mod built with Geode. Violetmod is designed as o
 
 ## Current development line - 0.4.0
 
-The current source contains the Geode project foundation, main-menu popup, interface customization, and a first runtime diagnostics overlay. FPS, frame time and process-session time labels are live; the safe-mode state is shown in-game. The remaining gameplay/performance switches are configuration entries until their runtime modules are completed and validated.
+The current source contains the Geode project foundation, main-menu popup, interface customization, and a runtime diagnostics overlay. FPS/update-rate estimate, frame time, session time, attempts, clicks, player coordinates, level name, Practice/Normal state and PlayLayer-update TPS are available as labels. A practice-only speed multiplier is implemented through PlayLayer update delta scaling; it is disabled in Safe Mode and never modifies Normal Mode. It is not audio-synchronized. Other gameplay/performance switches remain preferences until their runtime modules are completed and validated.
 
 ## Requested feature suite
 
 ### Gameplay and practice
-- Speedhack and audio synchronization
+- Practice-only speedhack (implemented; audio synchronization pending)
 - Noclip and limited noclip (local practice)
 - Layout mode
 - Show hitboxes, hitbox trail and trajectory
@@ -34,7 +34,7 @@ Physics TPS and rendered FPS are different systems. A requested target cannot gu
 - Verify Hack: allow an eligible level upload without a completed in-game verification, while clearly marking the level description as `UNVERIFIED`.
 
 ### On-screen labels
-Independent label toggles are available for FPS, frame time and session time in the first runtime pass. TPS, physics TPS, attempts, speed, player coordinates/mode, level name, practice status, input, memory and display refresh rate remain planned. Label scale and opacity are also configurable.
+Independent label toggles are available for FPS estimate, frame time, PlayLayer-update TPS, session time, attempts, speed setting, player coordinates, level name, practice status and input count. Physics TPS is not yet measured independently from PlayLayer updates. Player mode, memory and display refresh rate remain planned. Label scale and opacity are also configurable.
 
 ## Level copying and Verify Hack
 **All Copyable** will use Geometry Dash 2.2's current copy system. The old copy-password restriction is not used for 2.2 levels, so this is a compatibility utility rather than a password bypass.
