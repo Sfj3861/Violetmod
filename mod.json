@@ -329,6 +329,34 @@
       "type": "title",
       "name": "On-screen labels"
     },
+    "overlay-x": {
+      "type": "float",
+      "default": 8,
+      "min": 0,
+      "max": 1000,
+      "name": "Overlay horizontal position"
+    },
+    "overlay-y": {
+      "type": "float",
+      "default": 8,
+      "min": 0,
+      "max": 1000,
+      "name": "Overlay top margin"
+    },
+    "overlay-line-spacing": {
+      "type": "float",
+      "default": 20,
+      "min": 10,
+      "max": 40,
+      "name": "Overlay line spacing"
+    },
+    "overlay-refresh": {
+      "type": "float",
+      "default": 0.1,
+      "min": 0.03,
+      "max": 0.5,
+      "name": "Overlay refresh interval (seconds)"
+    },
     "label-fps": {
       "type": "bool",
       "default": false,
@@ -406,6 +434,12 @@
       "default": false,
       "name": "Label: Input display",
       "description": "Displays the current level click counter."
+    },
+    "label-click-rate": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Click rate",
+      "description": "Displays the rolling clicks-per-second rate."
     },
     "label-memory": {
       "type": "bool",
