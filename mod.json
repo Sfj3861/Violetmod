@@ -1,0 +1,495 @@
+{
+  "geode": "5.6.1",
+  "gd": {
+    "android": "2.2081",
+    "win": "2.2081"
+  },
+  "id": "sfj3861.violetmod",
+  "name": "Violetmod",
+  "version": "0.4.0",
+  "developer": "Sfj3861",
+  "description": "A unified, modular Geometry Dash toolkit for Geode with gameplay, diagnostics, editor and performance modules.",
+  "dependencies": {},
+  "settings": {
+    "ui-title": {
+      "type": "title",
+      "name": "Interface"
+    },
+    "ui-theme": {
+      "type": "string",
+      "default": "violet",
+      "name": "Color theme",
+      "description": "Choose the accent color used by Violetmod.",
+      "one-of": [
+        "violet",
+        "midnight",
+        "pink",
+        "blue",
+        "mint",
+        "amber",
+        "mono"
+      ]
+    },
+    "ui-scale": {
+      "type": "float",
+      "default": 1,
+      "min": 0.75,
+      "max": 1.35,
+      "name": "Interface scale",
+      "description": "Scales the popup contents."
+    },
+    "ui-compact": {
+      "type": "bool",
+      "default": false,
+      "name": "Compact layout",
+      "description": "Use a denser layout with less spacing."
+    },
+    "ui-show-subtitle": {
+      "type": "bool",
+      "default": true,
+      "name": "Show subtitle"
+    },
+    "ui-show-version": {
+      "type": "bool",
+      "default": true,
+      "name": "Show version in About"
+    },
+    "ui-button-label": {
+      "type": "string",
+      "default": "V",
+      "name": "Menu button text",
+      "description": "Text shown on the main-menu shortcut. Keep it short."
+    },
+    "ui-button-scale": {
+      "type": "float",
+      "default": 0.8,
+      "min": 0.4,
+      "max": 1.5,
+      "name": "Menu button size"
+    },
+    "ui-button-opacity": {
+      "type": "int",
+      "default": 255,
+      "min": 40,
+      "max": 255,
+      "name": "Menu button opacity"
+    },
+    "ui-button-enabled": {
+      "type": "bool",
+      "default": true,
+      "name": "Show menu shortcut"
+    },
+    "ui-popup-width": {
+      "type": "float",
+      "default": 320,
+      "min": 260,
+      "max": 420,
+      "name": "Popup width"
+    },
+    "ui-popup-height": {
+      "type": "float",
+      "default": 220,
+      "min": 180,
+      "max": 320,
+      "name": "Popup height"
+    },
+    "ui-close-on-escape": {
+      "type": "bool",
+      "default": true,
+      "name": "Close popup with back key"
+    },
+    "ui-animations": {
+      "type": "bool",
+      "default": true,
+      "name": "Popup animations"
+    },
+    "ui-title-tools": {
+      "type": "title",
+      "name": "Feature defaults"
+    },
+    "feature-frame-counter": {
+      "type": "bool",
+      "default": true,
+      "name": "Enable Frame Counter",
+      "description": "Counts PlayLayer update frames since the current gameplay session started."
+    },
+    "feature-hitbox-viewer": {
+      "type": "bool",
+      "default": false,
+      "name": "Enable Hitbox Viewer",
+      "description": "Enables the feature when its implementation is available."
+    },
+    "feature-trajectory": {
+      "type": "bool",
+      "default": false,
+      "name": "Enable Show Trajectory",
+      "description": "Enables the feature when its implementation is available."
+    },
+    "feature-practice-tools": {
+      "type": "bool",
+      "default": false,
+      "name": "Practice utilities"
+    },
+    "feature-level-tools": {
+      "type": "bool",
+      "default": true,
+      "name": "Level utilities"
+    },
+    "feature-session-stats": {
+      "type": "bool",
+      "default": true,
+      "name": "Session statistics"
+    },
+    "feature-notifications": {
+      "type": "bool",
+      "default": true,
+      "name": "In-game notifications"
+    },
+    "feature-title": {
+      "type": "title",
+      "name": "Safety and compatibility"
+    },
+    "compat-safe-mode": {
+      "type": "bool",
+      "default": false,
+      "name": "Safe mode",
+      "description": "Disables experimental Violetmod modules when implemented."
+    },
+    "compat-debug-logs": {
+      "type": "bool",
+      "default": false,
+      "name": "Debug logging"
+    },
+    "gameplay-title": {
+      "type": "title",
+      "name": "Gameplay and practice"
+    },
+    "feature-speedhack": {
+      "type": "bool",
+      "default": false,
+      "name": "Speedhack",
+      "description": "Implemented as a Practice Mode-only update-delta multiplier; disabled by Safe Mode."
+    },
+    "feature-speedhack-audio": {
+      "type": "bool",
+      "default": true,
+      "name": "Speedhack audio sync",
+      "description": "Preference only; module implementation is pending."
+    },
+    "feature-noclip": {
+      "type": "bool",
+      "default": false,
+      "name": "Noclip (local practice)",
+      "description": "Preference only; module implementation is pending."
+    },
+    "feature-limit-noclip": {
+      "type": "bool",
+      "default": false,
+      "name": "Limit Noclip",
+      "description": "Preference only; module implementation is pending."
+    },
+    "feature-layout-mode": {
+      "type": "bool",
+      "default": false,
+      "name": "Layout mode",
+      "description": "Preference only; module implementation is pending."
+    },
+    "feature-show-hitboxes": {
+      "type": "bool",
+      "default": false,
+      "name": "Show hitboxes",
+      "description": "Shows the player's rendered bounds as a visual approximation. This is not the game's true collision hitbox."
+    },
+    "feature-show-hitbox-trail": {
+      "type": "bool",
+      "default": false,
+      "name": "Show hitbox trail",
+      "description": "Draws recent historical outlines of the player's rendered bounds; not exact collision history."
+    },
+    "feature-show-trajectory": {
+      "type": "bool",
+      "default": false,
+      "name": "Show trajectory",
+      "description": "Draws the recent movement path in PlayLayer/world coordinates. This is a trail, not a future physics prediction."
+    },
+    "feature-smart-startpos": {
+      "type": "bool",
+      "default": false,
+      "name": "Smart StartPos",
+      "description": "Planned: automatic management of practice checkpoints."
+    },
+    "feature-startpos-switcher": {
+      "type": "bool",
+      "default": false,
+      "name": "StartPos switcher",
+      "description": "Planned: switch between saved practice checkpoints."
+    },
+    "feature-show-all-attempts": {
+      "type": "bool",
+      "default": false,
+      "name": "Show all attempts",
+      "description": "Preference only; module implementation is pending."
+    },
+    "feature-no-glow": {
+      "type": "bool",
+      "default": false,
+      "name": "No glow",
+      "description": "Preference only; module implementation is pending."
+    },
+    "feature-no-shaders": {
+      "type": "bool",
+      "default": false,
+      "name": "No shaders",
+      "description": "Preference only; module implementation is pending."
+    },
+    "feature-pitch-shifter": {
+      "type": "bool",
+      "default": false,
+      "name": "Pitch shifter",
+      "description": "Preference only; module implementation is pending."
+    },
+    "feature-frame-extrapolation": {
+      "type": "bool",
+      "default": false,
+      "name": "Frame extrapolation",
+      "description": "Preference only; module implementation is pending."
+    },
+    "physics-title": {
+      "type": "title",
+      "name": "Timing and performance"
+    },
+    "physics-tps-enabled": {
+      "type": "bool",
+      "default": false,
+      "name": "Custom physics TPS"
+    },
+    "physics-tps": {
+      "type": "int",
+      "default": 240,
+      "min": 30,
+      "max": 1000,
+      "name": "Physics TPS target",
+      "description": "Requested simulation tick rate; actual support depends on the game engine."
+    },
+    "fps-lock-enabled": {
+      "type": "bool",
+      "default": false,
+      "name": "FPS lock"
+    },
+    "fps-lock-value": {
+      "type": "int",
+      "default": 240,
+      "min": 30,
+      "max": 1000,
+      "name": "FPS target",
+      "description": "A target cannot guarantee rendered frames beyond device and engine limits."
+    },
+    "speedhack-value": {
+      "type": "float",
+      "default": 1,
+      "min": 0.1,
+      "max": 5,
+      "name": "Speed multiplier"
+    },
+    "pitch-shifter-value": {
+      "type": "float",
+      "default": 1,
+      "min": 0.5,
+      "max": 2,
+      "name": "Audio pitch"
+    },
+    "noclip-limit": {
+      "type": "int",
+      "default": 1,
+      "min": 1,
+      "max": 100,
+      "name": "Noclip limit"
+    },
+    "safety-title": {
+      "type": "title",
+      "name": "Safe mode"
+    },
+    "safe-mode-enabled": {
+      "type": "bool",
+      "default": false,
+      "name": "Safe mode"
+    },
+    "safe-mode-popup": {
+      "type": "bool",
+      "default": true,
+      "name": "Safe mode warning popup"
+    },
+    "auto-safe-mode": {
+      "type": "bool",
+      "default": false,
+      "name": "Automatic safe mode",
+      "description": "Planned compatibility fallback for unstable modules."
+    },
+    "labels-title": {
+      "type": "title",
+      "name": "On-screen labels"
+    },
+    "overlay-x": {
+      "type": "float",
+      "default": 8,
+      "min": 0,
+      "max": 1000,
+      "name": "Overlay horizontal position"
+    },
+    "overlay-y": {
+      "type": "float",
+      "default": 8,
+      "min": 0,
+      "max": 1000,
+      "name": "Overlay top margin"
+    },
+    "overlay-line-spacing": {
+      "type": "float",
+      "default": 20,
+      "min": 10,
+      "max": 40,
+      "name": "Overlay line spacing"
+    },
+    "overlay-refresh": {
+      "type": "float",
+      "default": 0.1,
+      "min": 0.03,
+      "max": 0.5,
+      "name": "Overlay refresh interval (seconds)"
+    },
+    "label-fps": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: FPS",
+      "description": "Displays an update-rate estimate from PlayLayer timing; it is not a hardware refresh-rate measurement."
+    },
+    "label-tps": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: TPS",
+      "description": "Displays measured PlayLayer update calls per second; this is not a separate physics-step counter."
+    },
+    "label-physics-tps": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Physics TPS",
+      "description": "Not implemented yet: a true physics-step counter requires a separate engine physics hook."
+    },
+    "label-frame-time": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Frame time",
+      "description": "Displays the latest PlayLayer update delta in milliseconds."
+    },
+    "label-attempts": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Attempts",
+      "description": "Displays the current level attempt count."
+    },
+    "label-session-time": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Session time",
+      "description": "Displays elapsed time since the gameplay session overlay was initialized."
+    },
+    "label-speed": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Speed multiplier",
+      "description": "Displays the configured speed multiplier value; it does not activate speedhack."
+    },
+    "label-player-x": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Player X position",
+      "description": "Displays the primary player's current X position."
+    },
+    "label-player-y": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Player Y position",
+      "description": "Displays the primary player's current Y position."
+    },
+    "label-player-mode": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Player mode",
+      "description": "Display preference; overlay implementation is pending."
+    },
+    "label-level-name": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Level name",
+      "description": "Displays the current level name."
+    },
+    "label-practice-status": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Practice status",
+      "description": "Displays whether the current run is in Practice or Normal mode."
+    },
+    "label-clicks": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Input display",
+      "description": "Displays the current level click counter."
+    },
+    "label-click-rate": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Click rate",
+      "description": "Displays the rolling clicks-per-second rate."
+    },
+    "label-memory": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Memory usage",
+      "description": "Display preference; overlay implementation is pending."
+    },
+    "label-device-refresh-rate": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Display refresh rate",
+      "description": "Display preference; overlay implementation is pending."
+    },
+    "labels-scale": {
+      "type": "float",
+      "default": 0.8,
+      "min": 0.4,
+      "max": 1.5,
+      "name": "Labels scale"
+    },
+    "labels-opacity": {
+      "type": "int",
+      "default": 220,
+      "min": 40,
+      "max": 255,
+      "name": "Labels opacity"
+    },
+    "feature-verify-hack": {
+      "type": "bool",
+      "default": false,
+      "name": "Verify Hack (UNVERIFIED upload)",
+      "description": "Allows the supported upload flow to mark an eligible unverified level as UNVERIFIED. Never represents it as verified."
+    },
+    "feature-all-copyable": {
+      "type": "bool",
+      "default": true,
+      "name": "All Copyable (GD 2.2)",
+      "description": "Uses the current Geometry Dash 2.2 copy workflow; not a password bypass."
+    },
+    "verify-hack-marker": {
+      "type": "string",
+      "default": "UNVERIFIED",
+      "name": "Unverified description marker",
+      "description": "Text appended to the level description when using Verify Hack."
+    },
+    "label-frame-counter": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Frame counter",
+      "description": "Displays the number of PlayLayer updates since the current gameplay session started."
+    }
+  }
+}
