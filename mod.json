@@ -198,19 +198,19 @@
       "type": "bool",
       "default": false,
       "name": "Show hitboxes",
-      "description": "Planned: true collision-shape visualization; not enabled until engine collision bounds are hooked."
+      "description": "Shows the player's rendered bounds as a visual approximation. This is not the game's true collision hitbox."
     },
     "feature-show-hitbox-trail": {
       "type": "bool",
       "default": false,
       "name": "Show hitbox trail",
-      "description": "Planned: records and displays collision-shape history."
+      "description": "Draws recent historical outlines of the player's rendered bounds; not exact collision history."
     },
     "feature-show-trajectory": {
       "type": "bool",
       "default": false,
       "name": "Show trajectory",
-      "description": "Planned: predicts and draws player movement using validated game physics."
+      "description": "Draws the recent movement path in PlayLayer/world coordinates. This is a trail, not a future physics prediction."
     },
     "feature-smart-startpos": {
       "type": "bool",
