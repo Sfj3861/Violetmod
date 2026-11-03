@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <chrono>
+#include <cmath>
 #include <iomanip>
 #include <sstream>
 #include <string>
@@ -11,7 +12,6 @@ using namespace geode::prelude;
 
 namespace {
     using Clock = std::chrono::steady_clock;
-    constexpr float kRefreshInterval = 0.10f;
 
     std::string formatDuration(double seconds) {
         auto total = static_cast<unsigned long long>(seconds);
@@ -55,24 +55,43 @@ namespace {
         if (!label) return;
 
         label->setString(value.c_str());
-        label->setPosition({8.f, y});
+        label->setPosition({Mod::get()->getSettingValue<float>("overlay-x"), y});
         label->setScale(Mod::get()->getSettingValue<float>("labels-scale"));
         label->setOpacity(static_cast<GLubyte>(
             Mod::get()->getSettingValue<int>("labels-opacity")
         ));
-        y -= 20.f * label->getScale();
+        y -= Mod::get()->getSettingValue<float>("overlay-line-spacing") * label->getScale();
     }
 
     void updateDiagnosticsOverlay(PlayLayer* layer, float dt) {
-        static auto sessionStart = Clock::now();
+        static PlayLayer* trackedLayer = nullptr;
+        static Clock::time_point sessionStart = Clock::now();
+        static Clock::time_point tpsWindowStart = Clock::now();
         static float refreshAccumulator = 0.f;
         static float lastFrameTimeMs = 0.f;
-        static float tpsWindow = 0.f;
+        static float smoothedFrameTimeMs = 0.f;
         static unsigned int updatesInWindow = 0;
         static float measuredTps = 0.f;
+        static int previousClicks = 0;
+        static float clicksPerSecond = 0.f;
+        static Clock::time_point clickWindowStart = Clock::now();
         static bool safeModeNoticeShown = false;
 
         auto* mod = Mod::get();
+        auto now = Clock::now();
+        if (trackedLayer != layer) {
+            trackedLayer = layer;
+            sessionStart = now;
+            tpsWindowStart = now;
+            clickWindowStart = now;
+            refreshAccumulator = 0.f;
+            updatesInWindow = 0;
+            previousClicks = layer->m_clicks;
+            measuredTps = 0.f;
+            clicksPerSecond = 0.f;
+            lastFrameTimeMs = 0.f;
+            smoothedFrameTimeMs = 0.f;
+        }
         bool safeMode = mod->getSettingValue<bool>("safe-mode-enabled");
         if (safeMode && !safeModeNoticeShown && mod->getSettingValue<bool>("safe-mode-popup")) {
             FLAlertLayer::create(
@@ -98,26 +117,40 @@ namespace {
 
         if (dt > 0.f) {
             lastFrameTimeMs = dt * 1000.f;
-            tpsWindow += dt;
+            smoothedFrameTimeMs = smoothedFrameTimeMs <= 0.f
+                ? lastFrameTimeMs : (smoothedFrameTimeMs * 0.85f + lastFrameTimeMs * 0.15f);
             ++updatesInWindow;
-            if (tpsWindow >= 1.f) {
-                measuredTps = static_cast<float>(updatesInWindow) / tpsWindow;
-                updatesInWindow = 0;
-                tpsWindow = 0.f;
-            }
         }
-        refreshAccumulator += dt;
-        if (refreshAccumulator < kRefreshInterval) return;
-        refreshAccumulator = 0.f;
+        auto tpsElapsed = std::chrono::duration<float>(now - tpsWindowStart).count();
+        if (tpsElapsed >= 1.f) {
+            measuredTps = tpsElapsed > 0.f
+                ? static_cast<float>(updatesInWindow) / tpsElapsed : 0.f;
+            updatesInWindow = 0;
+            tpsWindowStart = now;
+        }
+        float clickElapsed = std::chrono::duration<float>(now - clickWindowStart).count();
+        if (clickElapsed >= 1.f) {
+            int clickDelta = std::max(0, layer->m_clicks - previousClicks);
+            clicksPerSecond = static_cast<float>(clickDelta) / clickElapsed;
+            previousClicks = layer->m_clicks;
+            clickWindowStart = now;
+        }
+        float refreshInterval = std::clamp(mod->getSettingValue<float>("overlay-refresh"), 0.03f, 0.5f);
+        refreshAccumulator += std::max(0.f, dt);
+        if (refreshAccumulator < refreshInterval) return;
+        refreshAccumulator = std::fmod(refreshAccumulator, refreshInterval);
 
         auto winSize = CCDirector::get()->getWinSize();
-        float y = winSize.height - 8.f;
-        auto elapsed = std::chrono::duration<double>(Clock::now() - sessionStart).count();
+        float x = std::clamp(mod->getSettingValue<float>("overlay-x"), 0.f, winSize.width - 20.f);
+        float y = std::clamp(winSize.height - mod->getSettingValue<float>("overlay-y"), 20.f, winSize.height);
+        float lineSpacing = std::clamp(mod->getSettingValue<float>("overlay-line-spacing"), 10.f, 40.f);
+        auto elapsed = std::chrono::duration<double>(now - sessionStart).count();
 
-        std::ostringstream fps, frameTime, attempts, clicks, speed, px, py, tps;
+        std::ostringstream fps, frameTime, attempts, clicks, speed, px, py, tps, clickRate;
         fps << "FPS (update estimate): " << std::fixed << std::setprecision(1)
             << (lastFrameTimeMs > 0.f ? 1000.f / lastFrameTimeMs : 0.f);
-        frameTime << "Frame time: " << std::fixed << std::setprecision(2) << lastFrameTimeMs << " ms";
+        frameTime << "Frame time: " << std::fixed << std::setprecision(2) << smoothedFrameTimeMs << " ms";
+        clickRate << "Click rate: " << std::fixed << std::setprecision(1) << clicksPerSecond << "/s";
         tps << "TPS (PlayLayer updates): " << std::fixed << std::setprecision(1) << measuredTps;
         attempts << "Attempts: " << layer->m_attempts;
         clicks << "Clicks: " << layer->m_clicks;
@@ -132,6 +165,7 @@ namespace {
             "Session: " + formatDuration(elapsed), y);
         setOverlayLine(layer, "label-attempts", "violetmod-overlay-attempts", attempts.str(), y);
         setOverlayLine(layer, "label-clicks", "violetmod-overlay-clicks", clicks.str(), y);
+        setOverlayLine(layer, "label-click-rate", "violetmod-overlay-click-rate", clickRate.str(), y);
         setOverlayLine(layer, "label-speed", "violetmod-overlay-speed", speed.str(), y);
 
         auto* player = layer->m_player1;
@@ -165,7 +199,7 @@ class $modify(VioletmodPlayLayer, PlayLayer) {
         // Time manipulation is confined to Practice Mode to protect normal runs.
         if (!safeMode && speedhack && m_isPracticeMode) {
             float multiplier = mod->getSettingValue<float>("speedhack-value");
-            dt *= std::clamp(multiplier, 0.1f, 5.f);
+            if (std::isfinite(multiplier)) dt *= std::clamp(multiplier, 0.1f, 5.f);
         }
         PlayLayer::update(dt);
         updateDiagnosticsOverlay(this, realDt);
