@@ -111,7 +111,7 @@
       "type": "bool",
       "default": true,
       "name": "Enable Frame Counter",
-      "description": "Enables the feature when its implementation is available."
+      "description": "Counts PlayLayer update frames since the current gameplay session started."
     },
     "feature-hitbox-viewer": {
       "type": "bool",
@@ -168,7 +168,7 @@
       "type": "bool",
       "default": false,
       "name": "Speedhack",
-      "description": "Preference only; module implementation is pending."
+      "description": "Implemented as a Practice Mode-only update-delta multiplier; disabled by Safe Mode."
     },
     "feature-speedhack-audio": {
       "type": "bool",
@@ -198,31 +198,31 @@
       "type": "bool",
       "default": false,
       "name": "Show hitboxes",
-      "description": "Preference only; module implementation is pending."
+      "description": "Planned: true collision-shape visualization; not enabled until engine collision bounds are hooked."
     },
     "feature-show-hitbox-trail": {
       "type": "bool",
       "default": false,
       "name": "Show hitbox trail",
-      "description": "Preference only; module implementation is pending."
+      "description": "Planned: records and displays collision-shape history."
     },
     "feature-show-trajectory": {
       "type": "bool",
       "default": false,
       "name": "Show trajectory",
-      "description": "Preference only; module implementation is pending."
+      "description": "Planned: predicts and draws player movement using validated game physics."
     },
     "feature-smart-startpos": {
       "type": "bool",
       "default": false,
       "name": "Smart StartPos",
-      "description": "Preference only; module implementation is pending."
+      "description": "Planned: automatic management of practice checkpoints."
     },
     "feature-startpos-switcher": {
       "type": "bool",
       "default": false,
       "name": "StartPos switcher",
-      "description": "Preference only; module implementation is pending."
+      "description": "Planned: switch between saved practice checkpoints."
     },
     "feature-show-all-attempts": {
       "type": "bool",
@@ -367,13 +367,13 @@
       "type": "bool",
       "default": false,
       "name": "Label: TPS",
-      "description": "Display preference; overlay implementation is pending."
+      "description": "Displays measured PlayLayer update calls per second; this is not a separate physics-step counter."
     },
     "label-physics-tps": {
       "type": "bool",
       "default": false,
       "name": "Label: Physics TPS",
-      "description": "Display preference; overlay implementation is pending."
+      "description": "Not implemented yet: a true physics-step counter requires a separate engine physics hook."
     },
     "label-frame-time": {
       "type": "bool",
@@ -484,6 +484,12 @@
       "default": "UNVERIFIED",
       "name": "Unverified description marker",
       "description": "Text appended to the level description when using Verify Hack."
+    },
+    "label-frame-counter": {
+      "type": "bool",
+      "default": false,
+      "name": "Label: Frame counter",
+      "description": "Displays the number of PlayLayer updates since the current gameplay session started."
     }
   }
 }
