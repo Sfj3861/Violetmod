@@ -34,7 +34,7 @@ Physics TPS and rendered FPS are different systems. A requested target cannot gu
 - Verify Hack: allow an eligible level upload without a completed in-game verification, while clearly marking the level description as `UNVERIFIED`.
 
 ### On-screen labels
-Independent label toggles are available for FPS estimate, smoothed frame time, PlayLayer-update TPS, session time, attempts, speedhack state, player coordinates, level name, practice status, input count and rolling click rate. Physics TPS is not yet measured independently from PlayLayer updates. Player mode, memory and display refresh rate remain planned. Label scale and opacity are also configurable.
+Independent label toggles are available for FPS estimate, smoothed frame time, PlayLayer-update TPS, session time, attempts, speedhack state, player coordinates, level name, practice status, input count and rolling click rate. Physics TPS is not yet measured independently from PlayLayer updates; the overlay no longer labels the PlayLayer rate as physics TPS. Player mode, memory and display refresh rate remain planned. Label scale and opacity are also configurable.
 
 ## Level copying and Verify Hack
 **All Copyable** will use Geometry Dash 2.2's current copy system. The old copy-password restriction is not used for 2.2 levels, so this is a compatibility utility rather than a password bypass.
