@@ -146,9 +146,12 @@ namespace {
         refreshAccumulator = std::fmod(refreshAccumulator, refreshInterval);
 
         auto winSize = CCDirector::get()->getWinSize();
-        float x = std::clamp(mod->getSettingValue<float>("overlay-x"), 0.f, winSize.width - 20.f);
-        float y = std::clamp(winSize.height - mod->getSettingValue<float>("overlay-y"), 20.f, winSize.height);
-        float lineSpacing = std::clamp(mod->getSettingValue<float>("overlay-line-spacing"), 10.f, 40.f);
+        float minY = std::min(20.f, std::max(0.f, winSize.height));
+        float y = std::clamp(
+            winSize.height - mod->getSettingValue<float>("overlay-y"),
+            minY,
+            std::max(minY, winSize.height)
+        );
         auto elapsed = std::chrono::duration<double>(now - sessionStart).count();
 
         std::ostringstream fps, frameTime, attempts, clicks, speed, px, py, tps, clickRate, frameCounter;
