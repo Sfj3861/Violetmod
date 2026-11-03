@@ -132,7 +132,7 @@ namespace {
 
         std::string levelName = "Level: (unknown)";
         if (layer->m_level && !layer->m_level->m_levelName.empty()) {
-            levelName = "Level: " + layer->m_level->m_levelName;
+            levelName = std::string("Level: ") + layer->m_level->m_levelName.c_str();
         }
         setOverlayLine(layer, "label-level-name", "violetmod-overlay-level", levelName, y);
         setOverlayLine(layer, "label-practice-status", "violetmod-overlay-practice",
