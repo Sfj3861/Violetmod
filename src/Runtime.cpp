@@ -101,8 +101,9 @@ namespace {
         // follows the world/camera rather than being pinned to the screen.
         auto worldOrigin = player->convertToWorldSpace(CCPointZero);
         auto localOrigin = layer->convertToNodeSpace(worldOrigin);
-        if (playerPath.empty() ||
-            ccpDistance(playerPath.back(), localOrigin) >= 1.5f) {
+        float dx = playerPath.empty() ? 0.f : localOrigin.x - playerPath.back().x;
+        float dy = playerPath.empty() ? 0.f : localOrigin.y - playerPath.back().y;
+        if (playerPath.empty() || std::hypot(dx, dy) >= 1.5f) {
             playerPath.push_back(localOrigin);
             if (playerPath.size() > 90) playerPath.pop_front();
         }
@@ -123,14 +124,7 @@ namespace {
         auto anchor = player->getAnchorPoint();
         float width = size.width * std::abs(player->getScaleX());
         float height = size.height * std::abs(player->getScaleY());
-        float left = localOrigin.x - width * anchor.x;
-        float right = left + width;
-        float bottom = localOrigin.y - height * anchor.y;
-        float top = bottom + height;
-
-        auto drawBounds = [&](CCPoint const& origin, float alpha, float thickness) {
-            auto center = player->convertToWorldSpace(CCPointZero);
-            auto p = layer->convertToNodeSpace(center);
+        auto drawBounds = [&](CCPoint const& p, float alpha, float thickness) {
             float l = p.x - width * anchor.x;
             float r = l + width;
             float b = p.y - height * anchor.y;
