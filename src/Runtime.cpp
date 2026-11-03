@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <chrono>
+#include <deque>
 #include <cmath>
 #include <iomanip>
 #include <sstream>
@@ -63,6 +64,103 @@ namespace {
             Mod::get()->getSettingValue<int>("labels-opacity")
         ));
         y -= Mod::get()->getSettingValue<float>("overlay-line-spacing") * label->getScale();
+    }
+
+    void updateVisualDebug(PlayLayer* layer) {
+        static PlayLayer* trackedLayer = nullptr;
+        static std::deque<CCPoint> playerPath;
+        auto* mod = Mod::get();
+
+        auto* draw = static_cast<CCDrawNode*>(layer->getChildByID("violetmod-visual-debug"));
+        bool showBounds = mod->getSettingValue<bool>("feature-show-hitboxes");
+        bool showTrail = mod->getSettingValue<bool>("feature-show-hitbox-trail");
+        bool showPath = mod->getSettingValue<bool>("feature-show-trajectory");
+        bool enabled = (showBounds || showTrail || showPath) &&
+            !mod->getSettingValue<bool>("safe-mode-enabled");
+
+        if (!enabled || !layer->m_player1) {
+            if (draw) draw->clear();
+            if (!enabled) playerPath.clear();
+            return;
+        }
+
+        if (!draw) {
+            draw = CCDrawNode::create();
+            if (!draw) return;
+            draw->setID("violetmod-visual-debug");
+            layer->addChild(draw, 9998);
+        }
+
+        auto* player = layer->m_player1;
+        if (trackedLayer != layer) {
+            trackedLayer = layer;
+            playerPath.clear();
+        }
+
+        // Store the player's position in PlayLayer coordinates so the trace
+        // follows the world/camera rather than being pinned to the screen.
+        auto worldOrigin = player->convertToWorldSpace(CCPointZero);
+        auto localOrigin = layer->convertToNodeSpace(worldOrigin);
+        if (playerPath.empty() ||
+            ccpDistance(playerPath.back(), localOrigin) >= 1.5f) {
+            playerPath.push_back(localOrigin);
+            if (playerPath.size() > 90) playerPath.pop_front();
+        }
+
+        draw->clear();
+        if (showPath && playerPath.size() > 1) {
+            for (size_t i = 1; i < playerPath.size(); ++i) {
+                float alpha = 0.15f + 0.65f *
+                    (static_cast<float>(i) / static_cast<float>(playerPath.size()));
+                draw->drawSegment(
+                    playerPath[i - 1], playerPath[i], 1.4f,
+                    ccColor4F{0.25f, 0.85f, 1.f, alpha}
+                );
+            }
+        }
+
+        auto size = player->getContentSize();
+        auto anchor = player->getAnchorPoint();
+        float width = size.width * std::abs(player->getScaleX());
+        float height = size.height * std::abs(player->getScaleY());
+        float left = localOrigin.x - width * anchor.x;
+        float right = left + width;
+        float bottom = localOrigin.y - height * anchor.y;
+        float top = bottom + height;
+
+        auto drawBounds = [&](CCPoint const& origin, float alpha, float thickness) {
+            auto center = player->convertToWorldSpace(CCPointZero);
+            auto p = layer->convertToNodeSpace(center);
+            float l = p.x - width * anchor.x;
+            float r = l + width;
+            float b = p.y - height * anchor.y;
+            float t = b + height;
+            auto color = ccColor4F{1.f, 0.28f, 0.28f, alpha};
+            draw->drawSegment({l, b}, {r, b}, thickness, color);
+            draw->drawSegment({r, b}, {r, t}, thickness, color);
+            draw->drawSegment({r, t}, {l, t}, thickness, color);
+            draw->drawSegment({l, t}, {l, b}, thickness, color);
+        };
+
+        if (showTrail) {
+            size_t count = std::min<size_t>(playerPath.size(), 8);
+            for (size_t i = 0; i < count; ++i) {
+                auto const& p = playerPath[playerPath.size() - 1 - i];
+                float alpha = 0.08f + 0.035f * static_cast<float>(count - i);
+                float l = p.x - width * anchor.x;
+                float r = l + width;
+                float b = p.y - height * anchor.y;
+                float t = b + height;
+                auto color = ccColor4F{1.f, 0.55f, 0.2f, alpha};
+                draw->drawSegment({l, b}, {r, b}, 0.8f, color);
+                draw->drawSegment({r, b}, {r, t}, 0.8f, color);
+                draw->drawSegment({r, t}, {l, t}, 0.8f, color);
+                draw->drawSegment({l, t}, {l, b}, 0.8f, color);
+            }
+        }
+        if (showBounds) {
+            drawBounds(localOrigin, 0.95f, 1.6f);
+        }
     }
 
     void updateDiagnosticsOverlay(PlayLayer* layer, float dt) {
@@ -213,5 +311,6 @@ class $modify(VioletmodPlayLayer, PlayLayer) {
         }
         PlayLayer::update(dt);
         updateDiagnosticsOverlay(this, realDt);
+        updateVisualDebug(this);
     }
 };
